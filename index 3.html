@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Тест — Философия Древнего Китая</title>
+<style>
+  :root{
+    --bg:#000;
+    --neon:#39ff14; /* ярко-зелёный */
+    --card:#070707;
+    --muted:#bdbdbd;
+    --accent: rgba(57,255,20,0.06);
+  }
+  html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+  body{
+    background: radial-gradient(ellipse at center, #030303 0%, #000 70%);
+    color: #eee;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    overflow:hidden;
+  }
+
+  /* большая зелёная 13 в фоне */
+  .bg-13{
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    font-size:38vmin;
+    font-weight:900;
+    color:var(--neon);
+    opacity:0.07;
+    pointer-events:none;
+    text-shadow: 0 0 40px rgba(57,255,20,0.25), 0 0 100px rgba(57,255,20,0.06);
+    letter-spacing: .03em;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:960px;
+    z-index:5;
+    position:relative;
+  }
+
+  header.card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(57,255,20,0.08);
+    padding:22px;
+    border-radius:12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:18px;
+  }
+  .badge{
+    width:84px;height:84px;border-radius:12px;
+    background: linear-gradient(135deg, rgba(57,255,20,0.12), rgba(57,255,20,0.04));
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid rgba(57,255,20,0.12);
+    box-shadow: 0 8px 30px rgba(57,255,20,0.03) inset;
+    font-weight:900;color:var(--neon);font-size:22px;
+  }
+  header h1{margin:0;font-size:20px;line-height:1.05}
+  header p{margin:0;color:var(--muted);font-size:13px}
+
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);
+    padding:28px;
+    border-radius:12px;
+  }
+  .intro{
+    text-align:center;padding:34px 16px;
+    border-radius:10px;background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(255,255,255,0.01));
+    margin-bottom:14px;
+  }
+  .start-btn{
+    background: linear-gradient(90deg, rgba(57,255,20,0.12), rgba(57,255,20,0.07));
+    color:var(--neon);
+    border:1px solid rgba(57,255,20,0.15);
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:12px;
+  }
+
+  .question-box{margin-top:10px}
+  .q-title{font-size:18px;margin-bottom:12px}
+  .answers{display:grid;gap:10px}
+  .opt{
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    border:1px solid rgba(255,255,255,0.03);
+    padding:12px 14px;border-radius:10px;cursor:pointer;
+    display:flex;align-items:center;gap:12px;
+    transition:transform .12s ease, box-shadow .12s;
+  }
+  .opt:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+  .opt.selected{outline:2px solid rgba(57,255,20,0.18);box-shadow:0 6px 18px rgba(57,255,20,0.04) inset}
+  .controls{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:12px}
+  .btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px 14px;border-radius:10px;color:var(--muted);cursor:pointer}
+  .btn.primary{background:var(--neon);color:#000;border:0;font-weight:700}
+  .progress{
+    height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;width:100%;margin-top:12px;
+  }
+  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--neon), rgba(57,255,20,0.6));width:0%}
+
+  /* result */
+  .result{
+    text-align:center;padding:28px;border-radius:12px;
+  }
+  .score{
+    font-size:48px;color:var(--neon);font-weight:900;margin-bottom:8px;text-shadow:0 0 30px rgba(57,255,20,0.22);
+  }
+  .message{font-size:16px;color:var(--muted);margin-bottom:12px}
+  .quote{font-style:italic;color:#cfeccf;border-left:3px solid rgba(57,255,20,0.08);padding-left:12px;margin:12px auto;max-width:80%}
+
+  /* small screens */
+  @media (max-width:600px){
+    header{flex-direction:row;gap:12px}
+    .badge{width:64px;height:64px;font-size:18px}
+    .bg-13{font-size:56vmin}
+  }
+</style>
+</head>
+<body>
+<div class="bg-13">13</div>
+
+<div class="wrap">
+  <header class="card" aria-hidden="false">
+    <div class="badge">13</div>
+    <div>
+      <h1>13 группа — Тилабаев Озодбек</h1>
+      <p>Тест: «Философия Древнего Китая» — проверь свои знания о конфуцианстве, даосизме, легизме и древних мыслителях.</p>
+    </div>
+  </header>
+
+  <main class="card" id="app" role="application" aria-live="polite">
+    <section id="intro" class="intro">
+      <h2 style="margin:0 0 8px 0">Добро пожаловать!</h2>
+      <p style="margin:0;color:var(--muted)">Викторина содержит минимум 20 вопросов — ответь на каждый и получи интересный итог в конце.</p>
+      <button class="start-btn" id="startBtn" aria-label="Начать тест">Начать тест</button>
+      <p style="margin-top:8px;color:var(--muted);font-size:13px">Фон теста — чёрный; зелёная цифра 13 украшает фон.</p>
+    </section>
+
+    <section id="quiz" style="display:none">
+      <div id="qcard" class="question-box card">
+        <div class="q-title" id="qTitle">Вопрос...</div>
+        <div class="answers" id="answers" role="list"></div>
+
+        <div class="progress" aria-hidden="false" title="Прогресс">
+          <i id="progBar" style="width:0%"></i>
+        </div>
+
+        <div class="controls">
+          <div style="display:flex;gap:8px">
+            <button class="btn" id="prevBtn">← Назад</button>
+            <button class="btn" id="nextBtn">Далее →</button>
+          </div>
+          <div>
+            <button class="btn primary" id="submitBtn">Завершить и посмотреть результат</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="result" style="display:none" class="card result">
+      <div class="score" id="scoreVal">0 / 20</div>
+      <div class="message" id="resultMsg">Ваш результат</div>
+      <div class="quote" id="resultQuote">"..."</div>
+      <div style="margin-top:16px">
+        <button class="btn" id="retryBtn">Пройти ещё раз</button>
+        <button class="btn" id="reviewBtn">Посмотреть ответы</button>
+      </div>
+    </section>
+
+    <section id="review" style="display:none;margin-top:12px" class="card">
+      <h3 style="margin-top:0">Обзор ответов</h3>
+      <div id="reviewList" style="display:grid;gap:10px"></div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* --- Вопросы: минимум 20 --- 
+   Каждая запись: {q: 'вопрос', options: [...], a: индекс правильного ответа}
+*/
+const questions = [
+  {q: "Кто считается автором «Дао дэ цзин» (в традиции)?", options:["Конфуций","Лао-Цзы","Мэн-цзы","Чжуан-цзы"], a:1},
+  {q: "Какой термин у даосов означает 'недеяние', 'естественность'?", options:["仁 (жень)","礼 (ли)","无为 (у-вэй)","义 (и)"], a:2},
+  {q: "Как переводится китайское понятие '仁' (жень) у Конфуция?", options:["Человечность, доброта","Закон и наказание","Невмешательство","Военная доблесть"], a:0},
+  {q: "Как называется сборник высказываний Конфуция?", options:["Аналекты (Лунь юй)","Дао дэ цзин","Мо-цзы","Чжун юн"], a:0},
+  {q: "Кто из мыслителей был известен как критик конфуцианства и сторонник объективного жесткого порядка (легизм)?", options:["Лао-цзы","Шан Ян","Мэн-цзы","Чжуан-цзы"], a:1},
+  {q: "Какой принцип в конфуцианстве связан с выполнением ритуалов, приличий и обязанностей?", options:["礼 (ли)","道 (дао)","无为","法 (фa)"], a:0},
+  {q: "Мэн-цзы (Менций) известен тем, что утверждал:", options:["Человек по природе плох","Человек по природе хорош","Сила закона основа порядка","Нужно следовать природе без действий"], a:1},
+  {q: "Кто является автором диалогов и притч о жизни и естественности, центральной фигурой даосской школы после Лао-цзы?", options:["Чжуан-цзы","Мо-цзы","Шан Ян","Сюнь-цзы"], a:0},
+  {q: "Понятие '天' (тянь) в древнекитайской мысли чаще всего означает:", options:["Небо/небесный порядок/судьба","Конкретное божество","Личный стремления","Физическую землю"], a:0},
+  {q: "Что такое '君子' (цзюньцзы) в конфуцианской этике?", options:["Маленький правитель","Человек идеала, благородный человек","Штраф за проступок","Даосский мудрец"], a:1},
+  {q: "Какой мыслитель резко критиковал ритуалы и выступал за практическую полезность (экономию) — основатель моизма?", options:["Мо-цзы","Лао-цзы","Конфуций","Шан Ян"], a:0},
+  {q: "Какой термин обозначает правильность, справедливость в конфуцианской мысли?", options:["义 (и)","利 (ли)","无为","刑 (син)"], a:0},
+  {q: "В чём ключевая идея легизма (法家)?", options:["В силе законов и наказаний","В ритуалах и семейных обязанностях","В ненаправленном следовании природе","В любви и милосердии"], a:0},
+  {q: "Кто из философов утверждал, что человеческая мораль формируется через образование и ритуалы, а не врождённо доброжелательна?", options:["Сюнь-цзы","Мэн-цзы","Конфуций","Лао-цзы"], a:0},
+  {q: "Какая работа приписывается Лао-цзы и является фундаментом даосской мысли?", options:["Дао дэ цзин","Аналекты","Мо-цзы","尚书"], a:0},
+  {q: "Понятие '中庸' (чжун юн) обычно переводят как:", options:["Золотая середина / срединность","Бесстрашие","Невмешательство","Божественный закон"], a:0},
+  {q: "Какой принцип даосизма противопоставлен активному вмешательству в природу?", options:["无为 (у-вэй)","礼 (ли)","仁 (жень)","刑 (син)"], a:0},
+  {q: "Что такое '法' (фа) в контексте легизма?", options:["Закон, правила, система вознаграждений и наказаний","Духовный путь","Высшая добродетель","Название книги"], a:0},
+  {q: "Какое утверждение отражает точку зрения Чжуан-цзы?", options:["Истинное знание — понимание относительности и трансформации","Только ритуалы приносят порядок","Власть — единственная ценность","Человек по природе агрессивен"], a:0},
+  {q: "Что больше всего ценил Конфуций в руководителе?", options:["Личностный пример и мораль (образ благородного)","Жёсткие законы и наказания","Отказ от ритуалов","Насилие"], a:0},
+  // можно добавить подготовительные запасные вопросы при желании
+];
+
+let state = {
+  idx: 0,
+  answers: new Array(questions.length).fill(null),
+};
+
+const startBtn = document.getElementById('startBtn');
+const quizSec = document.getElementById('quiz');
+const intro = document.getElementById('intro');
+const qTitle = document.getElementById('qTitle');
+const answersEl = document.getElementById('answers');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const progBar = document.getElementById('progBar');
+const submitBtn = document.getElementById('submitBtn');
+const resultSec = document.getElementById('result');
+const scoreVal = document.getElementById('scoreVal');
+const resultMsg = document.getElementById('resultMsg');
+const resultQuote = document.getElementById('resultQuote');
+const retryBtn = document.getElementById('retryBtn');
+const reviewBtn = document.getElementById('reviewBtn');
+const reviewSection = document.getElementById('review');
+const reviewList = document.getElementById('reviewList');
+
+function shuffleOptions(q){
+  // Возвращает массив {text, origIndex}
+  return q.options.map((t,i)=>({t,i}));
+}
+
+function renderQuestion(i){
+  const q = questions[i];
+  qTitle.textContent = `Вопрос ${i+1}. ${q.q}`;
+  answersEl.innerHTML = '';
+  const opts = q.options.map((text, idx)=>({text, idx}));
+  // Отобразим варианты в исходном порядке (для предсказуемости) — можно тасовать по желанию.
+  opts.forEach(o=>{
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.setAttribute('role','button');
+    btn.setAttribute('aria-pressed','false');
+    btn.innerHTML = `<div style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700">${String.fromCharCode(65+o.idx)}</div>
+                     <div style="flex:1;text-align:left">${o.text}</div>`;
+    btn.onclick = ()=>{
+      state.answers[i] = o.idx;
+      // mark selection
+      Array.from(answersEl.children).forEach(el=>el.classList.remove('selected'));
+      btn.classList.add('selected');
+    };
+    // restore selected
+    if(state.answers[i] === o.idx) btn.classList.add('selected');
+    answersEl.appendChild(btn);
+  });
+
+  // progress
+  const pct = Math.round(((i)/questions.length)*100);
+  progBar.style.width = pct + '%';
+  prevBtn.disabled = i === 0;
+  nextBtn.disabled = i === questions.length-1;
+}
+
+startBtn.addEventListener('click', ()=>{
+  intro.style.display = 'none';
+  quizSec.style.display = 'block';
+  state.idx = 0;
+  state.answers = new Array(questions.length).fill(null);
+  renderQuestion(0);
+  // small focus
+  setTimeout(()=>answersEl.querySelector('.opt')?.focus(),100);
+});
+
+prevBtn.addEventListener('click', ()=>{
+  if(state.idx>0) state.idx--;
+  renderQuestion(state.idx);
+});
+
+nextBtn.addEventListener('click', ()=>{
+  if(state.idx<questions.length-1) state.idx++;
+  renderQuestion(state.idx);
+});
+
+submitBtn.addEventListener('click', ()=>{
+  // подсчитать
+  const unanswered = state.answers.reduce((acc,x,i)=>x===null?acc.concat(i+1):acc,[]);
+  if(unanswered.length>0){
+    // предложим пройти дальше, но не блокируем — покажем предупреждение
+    const proceed = confirm(`Вы не ответили на вопросы: ${unanswered.join(', ')}.\nПродолжить и получить результат? Нажмите OK чтобы продолжить.`);
+    if(!proceed) return;
+  }
+  showResult();
+});
+
+function showResult(){
+  let score = 0;
+  const total = questions.length;
+  for(let i=0;i<total;i++){
+    if(state.answers[i]===questions[i].a) score++;
+  }
+  quizSec.style.display = 'none';
+  resultSec.style.display = 'block';
+  scoreVal.textContent = `${score} / ${total}`;
+
+  // интересные результаты: три уровня + мини-совет + цитата
+  const pct = Math.round(score/total*100);
+  let msg='', quote='';
+  if(pct >= 85){
+    msg = "Мастер мысли: ваш разум балансирует как отточенный меч — вы сильно разбираетесь в древнекитайской философии.";
+    quote = "«Познающий себя — мудрец; познающий другие — просвещённый» — адаптированная мысль из классической мысли.";
+  } else if(pct >= 60){
+    msg = "Продвинутый ученик: у вас хорошее понимание, осталось чуть-чуть для мастерства.";
+    quote = "«Лучше быть маленьким светом, чем большим свечением без тепла» — путь среднего человека.";
+  } else if(pct >= 35){
+    msg = "Новичок на пути: вы знаете основы, но некоторые ключевые идеи требуют внимания — читайте «Аналекты» и «Дао дэ цзин».";
+    quote = "«Путь в тысячу ли начинается с первого шага» — классическая мудрость.";
+  } else {
+    msg = "Путник: прекрасный момент для начала. Философия Древнего Китая — глубокая река, начните с глав и думайте медленно.";
+    quote = "«Тот, кто не был учеником, не станет учителем» — мягкое напоминание о важности учёбы.";
+  }
+  resultMsg.textContent = msg;
+  resultQuote.textContent = quote;
+
+  // эффект подсветки (мигающее число 13)
+  animateBackgroundPulse();
+
+  // подготовить обзор
+  buildReview();
+}
+
+function buildReview(){
+  reviewList.innerHTML = '';
+  questions.forEach((q, i)=>{
+    const el = document.createElement('div');
+    el.style.border = '1px solid rgba(255,255,255,0.03)';
+    el.style.padding = '10px';
+    el.style.borderRadius = '8px';
+    const user = state.answers[i]===null ? '—' : String.fromCharCode(65 + state.answers[i]);
+    const correct = String.fromCharCode(65 + q.a);
+    const ok = state.answers[i]===q.a;
+    el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><strong>Вопрос ${i+1}</strong>
+                    <span style="font-weight:700;color:${ok? 'var(--neon)':'#ff7b7b'}">${ok? 'Правильно':'Неправильно'}</span></div>
+                    <div style="margin-top:8px;color:var(--muted)">${q.q}</div>
+                    <div style="margin-top:8px;font-size:14px">Ваш ответ: <strong>${user}</strong> — ${state.answers[i]===null? 'не отвечено' : q.options[state.answers[i]]}</div>
+                    <div style="margin-top:6px;font-size:14px">Правильный: <strong>${correct}</strong> — ${q.options[q.a]}</div>`;
+    reviewList.appendChild(el);
+  });
+}
+
+reviewBtn.addEventListener('click', ()=>{
+  resultSec.style.display = 'none';
+  reviewSection.style.display = 'block';
+  reviewSection.scrollIntoView({behavior:'smooth'});
+});
+retryBtn.addEventListener('click', ()=>{
+  resultSec.style.display = 'none';
+  reviewSection.style.display = 'none';
+  intro.style.display = 'none';
+  quizSec.style.display = 'block';
+  state.idx = 0;
+  state.answers = new Array(questions.length).fill(null);
+  renderQuestion(0);
+});
+
+/* Small decorative animation */
+function animateBackgroundPulse(){
+  const bg = document.querySelector('.bg-13');
+  bg.animate([
+    {opacity:0.04, transform:'translate(-50%,-50%) scale(1)'},
+    {opacity:0.14, transform:'translate(-50%,-50%) scale(1.05)'},
+    {opacity:0.04, transform:'translate(-50%,-50%) scale(1)'}
+  ], {duration:2200, iterations:3});
+}
+
+/* Accessibility: keyboard navigation for options */
+answersEl.addEventListener('keydown', (e)=>{
+  const opts = Array.from(answersEl.querySelectorAll('.opt'));
+  if(!opts.length) return;
+  const focused = document.activeElement;
+  let idx = opts.indexOf(focused);
+  if(e.key === 'ArrowDown'){ e.preventDefault(); idx = idx < 0 ? 0 : Math.min(opts.length-1, idx+1); opts[idx].focus(); }
+  if(e.key === 'ArrowUp'){ e.preventDefault(); idx = idx < 0 ? 0 : Math.max(0, idx-1); opts[idx].focus(); }
+  if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); focused?.click(); }
+});
+
+/* initial render not shown until start */
+renderQuestion(0);
+</script>
+</body>
+</html>
